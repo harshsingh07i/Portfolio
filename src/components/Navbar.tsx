@@ -1,10 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { Download, Moon, Sun, Menu, X } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useScroll, useMotionValueEvent } from 'motion/react';
 
 const Navbar: React.FC = () => {
   const [isDark, setIsDark] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 150) {
+      setIsVisible(false);
+    } else {
+      setIsVisible(true);
+    }
+  });
 
   useEffect(() => {
     // Check initial preference
@@ -27,8 +38,11 @@ const Navbar: React.FC = () => {
     <motion.nav 
       className="fixed top-0 left-0 w-full z-50 px-6 md:px-12 pt-6"
       initial={{ y: -50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, delay: 0.1 }}
+      animate={{ 
+        y: isVisible ? 0 : -100,
+        opacity: isVisible ? 1 : 0 
+      }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
     >
       <div className="max-w-[1400px] mx-auto bg-white/10 dark:bg-black/10 backdrop-blur-xl border border-white/20 dark:border-white/10 rounded-2xl px-6 py-3 flex items-center justify-between shadow-sm">
         
