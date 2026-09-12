@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -7,6 +8,28 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 
 function App() {
+  useEffect(() => {
+    let originalTitle = document.title;
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        document.title = 'Connection lost... 🔌';
+      } else {
+        document.title = 'Reconnecting...';
+        timeoutId = setTimeout(() => {
+          document.title = originalTitle;
+        }, 1000);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
   return (
     <main className="w-full min-h-screen bg-[#f0f0f0] dark:bg-[#080808] font-sans selection:bg-[#5E6470] dark:selection:bg-white selection:text-white dark:selection:text-black transition-colors duration-500">
       <Navbar />

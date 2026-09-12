@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Mail } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './icons';
 import { liquidReveal } from './About';
+import SignatureAnimation from './SignatureAnimation';
 
 const Contact: React.FC = () => {
   return (
@@ -45,15 +46,24 @@ const Contact: React.FC = () => {
         </a>
 
         {/* Improved Footer inside contact box for compactness */}
-        <div className="mt-16 pt-8 border-t border-[#e5e7eb] dark:border-white/10 w-full flex flex-col md:flex-row items-center justify-between gap-6 transition-colors duration-500">
-          <div className="flex items-center gap-3">
+        <div className="mt-16 pt-8 border-t border-[#e5e7eb] dark:border-white/10 w-full flex flex-col md:flex-row items-center justify-between gap-6 md:gap-0 transition-colors duration-500">
+          {/* Left section */}
+          <div className="flex items-center gap-3 md:w-1/3 justify-center md:justify-start">
             <img src={`${import.meta.env.BASE_URL}h_logo.png`} alt="Logo" className="w-6 h-6 object-contain invert dark:invert-0 transition-all duration-500" />
-            <p className="text-[#5E6470] dark:text-gray-400 opacity-80 text-sm font-medium transition-colors duration-500">
-              © 2026 Harsh Pratap Singh. All rights reserved.
+            <p className="text-[#5E6470] dark:text-gray-400 opacity-80 text-sm font-medium transition-colors duration-500 whitespace-nowrap">
+              © 2026. All rights reserved.
             </p>
           </div>
           
-          <div className="flex items-center gap-5">
+          {/* Center section: Signature */}
+          <div className="flex justify-center items-center md:w-1/3 overflow-visible">
+            <div className="scale-50 md:scale-75 origin-center h-[25px] md:h-[38px] flex justify-center items-center text-black dark:text-white">
+              <SignatureAnimation duration={1.2}>Harsh Pratap Singh</SignatureAnimation>
+            </div>
+          </div>
+          
+          {/* Right section */}
+          <div className="flex items-center gap-5 md:w-1/3 justify-center md:justify-end">
             <a href="https://github.com/harshsingh07i" target="_blank" rel="noopener noreferrer" className="text-[#5E6470] dark:text-gray-400 opacity-70 hover:opacity-100 dark:hover:text-white transition-all duration-300 transform hover:scale-110">
               <GithubIcon size={22} />
             </a>
